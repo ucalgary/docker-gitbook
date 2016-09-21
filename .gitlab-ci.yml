@@ -1,0 +1,29 @@
+services:
+  - docker:1.12.1-dind
+
+stages:
+  - build
+  - release
+
+variables:
+  GITBOOK_VERSION: '3.2.0'
+
+before_script:
+  - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN docker.ucalgary.ca
+
+build:
+  stage: build
+  script:
+    - docker build --pull -t $CI_REGISTRY_IMAGE:$CI_BUILD_REF_NAME .
+    - docker push $CI_REGISTRY_IMAGE:$CI_BUILD_REF_NAME
+
+release:
+  stage: release
+  script:
+    - docker pull $CI_REGISTRY_IMAGE:$CI_BUILD_REF_NAME
+    - docker tag $CI_REGISTRY_IMAGE:$CI_BUILD_REF_NAME $CI_REGISTRY_IMAGE:$GITBOOK_VERSION
+    - docker tag $CI_REGISTRY_IMAGE:$CI_BUILD_REF_NAME $CI_REGISTRY_IMAGE:latest
+    - docker push $CI_REGISTRY_IMAGE:$GITBOOK_VERSION
+    - docker push $CI_REGISTRY_IMAGE:latest
+  only:
+    - master
