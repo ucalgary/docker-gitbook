@@ -1,4 +1,4 @@
-FROM node:6.6.0-slim
+FROM node:6.9.1-slim
 
 MAINTAINER King Chung Huang <kchuang@ucalgary.ca>
 
