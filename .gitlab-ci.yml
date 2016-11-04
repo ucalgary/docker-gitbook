@@ -3,7 +3,7 @@ stages:
   - release
 
 variables:
-  GITBOOK_VERSION: '3.2.0'
+  GITBOOK_VERSION: '3.2.2'
 
 before_script:
   - if [ -n "${CI_BUILD_TOKEN}" ]; then docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY; fi
