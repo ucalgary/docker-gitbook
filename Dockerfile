@@ -1,4 +1,4 @@
-FROM node:6.9.1-slim
+FROM node:6.9.4-slim
 
 RUN npm install gitbook-cli -g
 
